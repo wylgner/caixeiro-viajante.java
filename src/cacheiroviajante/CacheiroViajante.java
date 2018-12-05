@@ -64,12 +64,11 @@ public class CacheiroViajante {
         return crom_temp;
     }
     private static boolean cromossomoValido(int[] c_tmp, int[][] cromossomos) {
-        int j, j2;
         boolean crom_valido = true;
-        for (j = 0; j < numeroDeCromossomos; j++) {
+        for (int i = 0; i < numeroDeCromossomos; i++) {
             int n_iguais = 0;
-            for (j2 = 0; j2 < numeroDeCidades; j2++) {
-                if (c_tmp[j2] == cromossomos[j][j2]) {
+            for (int j = 0; j < numeroDeCidades; j++) {
+                if (c_tmp[i] == cromossomos[i][j]) {
                     n_iguais++;
                 }
             }
