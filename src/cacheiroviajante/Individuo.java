@@ -5,38 +5,75 @@
  */
 package cacheiroviajante;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  *
  * @author wylgn
  */
 public class Individuo {
 
-    public int distancia;
-    public int id_cidade;
-    
-    public Individuo() {
+    private ArrayList<Cidade> cidades = new ArrayList();
+    private int tamanho;
+    private float aptidao;
 
+    public Individuo(int tamanho, ArrayList<Cidade> cidades) {
+
+        this.cidades = cidades;
+        this.tamanho = tamanho;
     }
 
-    public Individuo(int distancia, int id_cidade) {
-        this.distancia = distancia;
-        this.id_cidade = id_cidade;
+    public ArrayList<Cidade> getCidades() {
+        return cidades;
     }
 
-    public int getDistancia() {
-        return distancia;
+    public void setCidades(ArrayList<Cidade> Cidades) {
+        this.cidades = Cidades;
     }
 
-    public void setDistancia(int distancia) {
-        this.distancia = distancia;
+    public int getTamanho() {
+        return tamanho;
     }
 
-    public int getId_cidade() {
-        return id_cidade;
+    public void setTamanho(int tamanho) {
+        this.tamanho = tamanho;
     }
 
-    public void setId_cidade(int id_cidade) {
-        this.id_cidade = id_cidade;
+    public float getAptidao() {
+        return aptidao;
+    }
+
+    public void setAptidao(float aptidao) {
+        this.aptidao = aptidao;
+    }
+
+    public int fitness() {
+        Cidade c1, c2;
+        float soma = 0;
+        float hipot = 0;
+        int i = 1;
+        Iterator it = cidades.iterator();
+        while (it.hasNext()) {
+            if (i == tamanho) {
+                c2 = cidades.get(0);
+            } else {
+                c2 = cidades.get(i);
+            }
+            c1 = (Cidade) it.next();
+            float x1, y1;
+            x1 = (c1.getX() - c2.getX());
+            y1 = ((c1.getY() - c2.getY()));
+            hipot = (x1 * x1) + (y1 * y1);
+            soma += Math.pow(hipot, 2);
+
+            System.out.println(c1.getNome());
+            System.out.println(c2.getNome());
+            System.out.println(soma);
+            i++;
+        }
+        aptidao = soma;
+        return 0;
     }
 
 }
