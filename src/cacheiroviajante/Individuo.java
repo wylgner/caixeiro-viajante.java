@@ -7,21 +7,24 @@ package cacheiroviajante;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.lang.Comparable;
+import java.util.Collections;
 
 /**
  *
  * @author wylgn
  */
-public class Individuo {
+public class Individuo implements Comparable<Individuo> {
 
     private ArrayList<Cidade> cidades = new ArrayList();
     private int tamanho;
     private float aptidao;
-
+     
     public Individuo(int tamanho, ArrayList<Cidade> cidades) {
 
         this.cidades = cidades;
         this.tamanho = tamanho;
+        fitness();
     }
 
     public ArrayList<Cidade> getCidades() {
@@ -30,6 +33,7 @@ public class Individuo {
 
     public void setCidades(ArrayList<Cidade> Cidades) {
         this.cidades = Cidades;
+
     }
 
     public int getTamanho() {
@@ -61,19 +65,41 @@ public class Individuo {
                 c2 = cidades.get(i);
             }
             c1 = (Cidade) it.next();
-            float x1, y1;
-            x1 = (c1.getX() - c2.getX());
-            y1 = ((c1.getY() - c2.getY()));
+            float x1 = 0, y1 = 0;
+            x1 = Math.abs((c1.getX() - c2.getX()));
+            y1 = Math.abs(((c1.getY() - c2.getY())));
             hipot = (x1 * x1) + (y1 * y1);
-            soma += Math.pow(hipot, 2);
+            soma += Math.sqrt(hipot);
 
             System.out.println(c1.getNome());
             System.out.println(c2.getNome());
-            System.out.println(soma);
+            System.out.printf("%.2f", soma);
+            System.out.println("");
             i++;
         }
         aptidao = soma;
         return 0;
+    }
+
+    public int comparar(Individuo i1, Individuo i2) {
+        if (i1.getAptidao() < i2.getAptidao()) {
+            return -1;
+        } else if (i1.getAptidao() > i2.getAptidao()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public int compareTo(Individuo o) {
+         if (this.aptidao < o.getAptidao()) {
+            return -1;
+        } else if (this.aptidao > o.getAptidao()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
 }

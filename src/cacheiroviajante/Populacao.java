@@ -6,6 +6,7 @@
 package cacheiroviajante;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -14,16 +15,24 @@ import java.util.ArrayList;
 public class Populacao {
 
     private ArrayList<Individuo> geracao = new ArrayList();
+    private float fitness;
 
     public Populacao(ArrayList<Individuo> geracao) {
         this.geracao = geracao;
+        calculaMediaFitness();
     }
 
     public Populacao() {
     }
 
-  
-    
+    public float getFitness() {
+        return fitness;
+    }
+
+    public void setFitness(float fitness) {
+        this.fitness = fitness;
+    }
+
     public ArrayList<Individuo> getGeracao() {
         return geracao;
     }
@@ -31,6 +40,24 @@ public class Populacao {
     public void setGeracao(ArrayList<Individuo> geracao) {
         this.geracao = geracao;
     }
-    
-    
+
+    public void calculaMediaFitness() {
+        float soma = 0;
+        for (int i = 0; i < geracao.size(); i++) {
+            // System.out.println(geracao.get(i).getAptidao());
+            soma += geracao.get(i).getAptidao();
+        }
+        fitness = soma / geracao.size();
+    }
+
+    public void ordenaIndividuos() {
+        for (int i = 0; i < geracao.size(); i++) {
+            System.out.println(geracao.get(i).getAptidao());
+        }
+        Collections.sort(geracao);
+        for (int i = 0; i < geracao.size(); i++) {
+            System.out.println("Segundo" + geracao.get(i).getAptidao());
+        }
+    }
+
 }
