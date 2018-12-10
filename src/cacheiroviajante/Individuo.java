@@ -19,12 +19,15 @@ public class Individuo implements Comparable<Individuo> {
     private ArrayList<Cidade> cidades = new ArrayList();
     private int tamanho;
     private float aptidao;
-     
+
     public Individuo(int tamanho, ArrayList<Cidade> cidades) {
 
         this.cidades = cidades;
         this.tamanho = tamanho;
         fitness();
+    }
+
+    public Individuo() {
     }
 
     public ArrayList<Cidade> getCidades() {
@@ -93,7 +96,7 @@ public class Individuo implements Comparable<Individuo> {
 
     @Override
     public int compareTo(Individuo o) {
-         if (this.aptidao < o.getAptidao()) {
+        if (this.aptidao < o.getAptidao()) {
             return -1;
         } else if (this.aptidao > o.getAptidao()) {
             return 1;
