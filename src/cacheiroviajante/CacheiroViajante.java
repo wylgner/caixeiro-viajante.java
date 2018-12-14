@@ -37,7 +37,7 @@ public class CacheiroViajante {
         Random gerador = new Random();
         for (int i = 0; i < numeroDeCidades; i++) {
 
-            Cidade cromo = new Cidade("c" + i, gerador.nextInt((100) + 1), gerador.nextInt((100) + 1));
+            Cidade cromo = new Cidade("c" + i, gerador.nextInt((1000) + 1), gerador.nextInt((1000) + 1));
             cidades.add(cromo);
 
         }
@@ -80,15 +80,21 @@ public class CacheiroViajante {
     public static Individuo mutacao(Individuo ind) {
         Random r = new Random();
         Cidade aux = new Cidade();
-        ArrayList cid = ind.getCidades();
+        ArrayList<Cidade> cid = ind.getCidades();
         int pos1 = r.nextInt((numeroDeCidades - 1) + 1);
         int pos2 = r.nextInt((numeroDeCidades - 1) + 1);
         int loop = r.nextInt((numeroDeCidades - 1) + 1);
-        for (int i = 0; i < loop; i++) {
-            if (r.nextInt((100) + 1) <= taxaDeMutacao) {
-                Collections.shuffle(cid);
-
+        int g = 0;
+        ArrayList<Cidade> cid2 = ind.getCidades();
+        if (r.nextInt((100) + 1) <= taxaDeMutacao) {
+            for (int i = 0; i < loop; i++) {
+                Collections.swap(cid, pos1, pos2);
+                g = 1;
             }
+
+        }
+        if (g == 1) {
+            System.out.println("Individuo sofreu mutação");
         }
 
         ind.setCidades(cid);
@@ -121,6 +127,7 @@ public class CacheiroViajante {
         for (int x = 0; x < numeroDeIndividuos; x++) {
             Individuo pai = torneio(p);
             pai = mutacao(pai);
+            //System.out.println("Pai depois de mutação: ");
             Individuo mae = torneio(p);
             mae = mutacao(mae);
             ArrayList<Cidade> x1 = new ArrayList();
@@ -155,7 +162,7 @@ public class CacheiroViajante {
         try {
             System.out.println("Criando...");
             OutputStream png = new FileOutputStream("Grafico.png");
-            ChartUtilities.writeChartAsPNG(png, criaChart, 500, 400);
+            ChartUtilities.writeChartAsPNG(png, criaChart, 1080, 720);
             png.close();
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
@@ -231,7 +238,6 @@ public class CacheiroViajante {
         System.out.println(IndTop.getCidades().get(0).getNome());
         System.out.println("Aptdão: " + IndTop.getAptidao());
         System.out.println("Geração: " + geracaoDoMelhor);
-      
 
     }
 
