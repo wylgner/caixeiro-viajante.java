@@ -15,6 +15,7 @@ import java.util.Collections;
 public class Populacao {
 
     private ArrayList<Individuo> geracao = new ArrayList();
+    
     private float fitness;
 
     public Populacao(ArrayList<Individuo> geracao) {
@@ -51,13 +52,20 @@ public class Populacao {
     }
 
     public void ordenaIndividuos() {
+        System.out.println("APT dos Individuos na ordem de ocorrencia: ");
         for (int i = 0; i < geracao.size(); i++) {
-            System.out.println(geracao.get(i).getAptidao());
+            System.out.println("Aptdão: " + geracao.get(i).getAptidao());
         }
+        System.out.println("---------------------------------------------------");
         Collections.sort(geracao);
+        System.out.println("Ordenados pela melhor aptdão: ");
         for (int i = 0; i < geracao.size(); i++) {
-            System.out.println("Segundo" + geracao.get(i).getAptidao());
+            System.out.println("Aptdão: " + geracao.get(i).getAptidao());
         }
+        System.out.println("---------------------------------------------------");
+        
     }
+    
+    
 
 }

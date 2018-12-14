@@ -55,14 +55,37 @@ public class Individuo implements Comparable<Individuo> {
         this.aptidao = aptidao;
     }
 
+    public void printFitness() {
+        Cidade c1, c2;
+        Iterator it = cidades.iterator();
+//        int i = 1;
+//        System.out.println("---------------------------------------------------");
+//        while (it.hasNext()) {
+//            c1 = (Cidade) it.next();
+//            if (i == cidades.size()) {
+//                c2 = cidades.get(0);
+//            } else {
+//                c2 = cidades.get(i);
+//            }
+//            System.out.println(c1.getNome());
+//            System.out.println(c2.getNome());
+//            System.out.printf("%f", aptidao);
+//            System.out.println("");
+//            System.out.println("");
+//            i++;
+//        }
+    }
+
     public int fitness() {
         Cidade c1, c2;
         float soma = 0;
         float hipot = 0;
+        aptidao = 0;
         int i = 1;
         Iterator it = cidades.iterator();
+        System.out.println("---------------------------------------------------");
         while (it.hasNext()) {
-            if (i == tamanho) {
+            if (i == cidades.size()) {
                 c2 = cidades.get(0);
             } else {
                 c2 = cidades.get(i);
