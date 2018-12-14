@@ -5,11 +5,21 @@
  */
 package cacheiroviajante;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.EOFException;
+import org.jfree.chart.JFreeChart;
 
 /**
  *
@@ -85,20 +95,36 @@ public class CacheiroViajante {
         return ind;
     }
 
+    public static Individuo torneio(Populacao p) {
+        Random r = new Random();
+        int primeiro = r.nextInt((numeroDeCidades - 1) + 1);
+        int segundo = r.nextInt((numeroDeCidades - 1) + 1);
+        Individuo p1 = p.getGeracao().get(primeiro);
+        Individuo p2 = p.getGeracao().get(segundo);
+        Individuo retorno;
+        if (p1.getAptidao() < p2.getAptidao()) {
+            retorno = p1;
+        } else {
+            retorno = p2;
+        }
+        return retorno;
+
+    }
+
     public static ArrayList<Individuo> crossover1(Populacao p, int pontoDeCorte) {
-         
+
         int pontoDec = numeroDeCidades / 2;
         ArrayList<Cidade> c = new ArrayList();
-        
+
         ArrayList<Individuo> i2 = new ArrayList();
-       
+
         for (int x = 0; x < numeroDeIndividuos; x++) {
-            Individuo pai = getPai(p, x);
+            Individuo pai = torneio(p);
             pai = mutacao(pai);
-            Individuo mae = getMae(p, x + 1);
+            Individuo mae = torneio(p);
             mae = mutacao(mae);
             ArrayList<Cidade> x1 = new ArrayList();
-           
+
             c.clear();
             for (int i = 0; i < pontoDec; i++) {
 
@@ -116,6 +142,24 @@ public class CacheiroViajante {
         }
 
         return i2;
+    }
+
+    public static void criaGrafico(Individuo ind) {
+        DefaultCategoryDataset df = new DefaultCategoryDataset();
+        for (int i = 0; i < numeroDeCidades; i++) {
+            df.addValue(ind.getCidades().get(i).getX(), "X", "X_" + ind.getCidades().get(i).getNome());
+            //  df.addValue(ind.getCidades().get(i).getY(), "Y", "Y_" + ind.getCidades().get(i).getNome());
+        }
+        JFreeChart criaChart = ChartFactory.createLineChart("Teste de Grafico", "X", "Y", df,
+                PlotOrientation.HORIZONTAL, true, true, false);
+        try {
+            System.out.println("Criando...");
+            OutputStream png = new FileOutputStream("Grafico.png");
+            ChartUtilities.writeChartAsPNG(png, criaChart, 500, 400);
+            png.close();
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -172,8 +216,8 @@ public class CacheiroViajante {
             for (Individuo ixa : p.getGeracao()) {
                 if (ixa.getAptidao() < IndTop.getAptidao()) {
                     IndTop = ixa;
-                    geracaoDoMelhor = i+1;
-                    
+                    geracaoDoMelhor = i + 1;
+
                 }
             }
 
@@ -187,6 +231,7 @@ public class CacheiroViajante {
         System.out.println(IndTop.getCidades().get(0).getNome());
         System.out.println("Aptdão: " + IndTop.getAptidao());
         System.out.println("Geração: " + geracaoDoMelhor);
+      
 
     }
 
