@@ -12,14 +12,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.EOFException;
-import org.jfree.chart.JFreeChart;
+
 
 /**
  *
@@ -151,23 +147,7 @@ public class CacheiroViajante {
         return i2;
     }
 
-    public static void criaGrafico(Individuo ind) {
-        DefaultCategoryDataset df = new DefaultCategoryDataset();
-        for (int i = 0; i < numeroDeCidades; i++) {
-            df.addValue(ind.getCidades().get(i).getX(), "X", "X_" + ind.getCidades().get(i).getNome());
-            //  df.addValue(ind.getCidades().get(i).getY(), "Y", "Y_" + ind.getCidades().get(i).getNome());
-        }
-        JFreeChart criaChart = ChartFactory.createLineChart("Teste de Grafico", "X", "Y", df,
-                PlotOrientation.HORIZONTAL, true, true, false);
-        try {
-            System.out.println("Criando...");
-            OutputStream png = new FileOutputStream("Grafico.png");
-            ChartUtilities.writeChartAsPNG(png, criaChart, 1080, 720);
-            png.close();
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }
+   
 
     public static void main(String[] args) throws InterruptedException {
 
